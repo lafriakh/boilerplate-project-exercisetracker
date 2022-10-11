@@ -56,7 +56,9 @@ app.post('/api/users', async (req, res) => {
 });
 
 app.get('/api/users', async (req, res) => {
-  res.json(USER.find({}));
+  USER.find().lean().exec(function (err, users) {
+    return res.end(JSON.stringify(users));
+  });
 });
 
 app.get('/api/users/:_id/exercises', async (req, res) => {
