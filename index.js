@@ -76,7 +76,8 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   await exercise.save();
 
   res.json({
-    ...user,
+    _id: user._id,
+    username: user.username,
     exercise: exercise,
   });
 });
