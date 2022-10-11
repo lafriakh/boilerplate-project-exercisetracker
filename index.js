@@ -93,7 +93,7 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   res.json({
     _id: user.id,
     username: user.username,
-    count: exercises.count,
+    count: exercises.length,
     log: exercises.map(exercise => ({
       description: exercise.description,
       duration: exercise.duration,
