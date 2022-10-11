@@ -66,7 +66,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   const { _id } = req.params;
   const { description, duration, date } = req.body;
 
-  const user = await USER.findById(_id).lean();
+  const user = await USER.findById(_id);
   const exercise = new EXERCISE({
     description: description,
     duration: duration,
@@ -76,7 +76,8 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   await exercise.save();
 
   res.json({
-    ...user,
+    _id: user._id,
+    username: user.username,
     exercise: exercise,
   });
 });
