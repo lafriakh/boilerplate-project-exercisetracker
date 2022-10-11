@@ -85,8 +85,18 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
 });
 
 app.get('/api/users/:_id/logs', async (req, res) => {
+  const { _id } = req.params;
 
-})
+  const user = await USER.findById(_id);
+  const exercises = await EXERCISE.find({ user: user._id }).lean();
+
+  res.json({
+    _id: user.id,
+    username: user.username,
+    count: exercises.count,
+    log: exercises,
+  });
+});
 
 
 
