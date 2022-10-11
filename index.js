@@ -37,7 +37,7 @@ const exerciseSchema = new mongoose.Schema({
     required: true,
   },
   date: {
-    type: String,
+    type: Date,
     required: false,
     default: Date.now
   }
@@ -78,9 +78,9 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   res.json({
     _id: user._id,
     username: user.username,
-    description: exercise.description,
-    duration: exercise.duration,
     date: exercise.date,
+    duration: exercise.duration,
+    description: exercise.description,
   });
 });
 
