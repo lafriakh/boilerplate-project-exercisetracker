@@ -88,14 +88,18 @@ app.get('/api/users/:_id/logs', async (req, res) => {
   const { _id } = req.params;
   const { from, to, limit } = req.query;
 
+  const dateQuery = (from && to) ? {
+    date: {
+      $gte: new Date(from),
+      $lte: new Date(to),
+    },
+  } : {};
+
   const user = await USER.findById(_id);
   const exercises = await EXERCISE
     .find({
       user: user._id,
-      date: {
-        $gte: new Date(from),
-        $lt: new Date(to),
-      },
+      ...dateQuery,
     })
     .limit(parseInt(limit))
     .lean();
