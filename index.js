@@ -38,7 +38,8 @@ const exerciseSchema = new mongoose.Schema({
   },
   date: {
     type: String,
-    required: true
+    required: true,
+    default: Date.now
   }
 });
 
@@ -61,7 +62,23 @@ app.get('/api/users', async (req, res) => {
   });
 });
 
-app.get('/api/users/:_id/exercises', async (req, res) => {
+app.post('/api/users/:_id/exercises', async (req, res) => {
+  const { _id } = req.params;
+  const { description, duration, date } = req.body;
+
+  const user = USER.findOne(_id);
+  const exercise = new EXERCISE({
+    description: description,
+    duration: duration,
+    date: date,
+    user: user._id,
+  });
+  await exercise.save();
+
+  res.json({
+    ...user,
+    exercise: exercise,
+  })
 
 });
 app.get('/api/users/:_id/logs', async (req, res) => {
