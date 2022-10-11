@@ -86,9 +86,19 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
 
 app.get('/api/users/:_id/logs', async (req, res) => {
   const { _id } = req.params;
+  const { from, to, limit } = req.query;
 
   const user = await USER.findById(_id);
-  const exercises = await EXERCISE.find({ user: user._id }).lean();
+  const exercises = await EXERCISE
+    .find({
+      user: user._id,
+      date: {
+        $gte: new Date(from),
+        $lt: new Date(to),
+      },
+    })
+    .limit(parseInt(limit))
+    .lean();
 
   res.json({
     _id: user.id,
