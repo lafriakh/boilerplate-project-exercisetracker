@@ -70,7 +70,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   const exercise = new EXERCISE({
     description: description,
     duration: duration,
-    date: date,
+    date: date ? new Date(date).toDateString() : new Date().toDateString(),
     user: user._id,
   });
   await exercise.save();
