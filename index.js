@@ -66,7 +66,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
   const { _id } = req.params;
   const { description, duration, date } = req.body;
 
-  const user = await USER.findOne(_id);
+  const user = await USER.findById(_id);
   const exercise = new EXERCISE({
     description: description,
     duration: duration,
@@ -81,6 +81,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
     exercise: exercise,
   });
 });
+
 app.get('/api/users/:_id/logs', async (req, res) => {
 
 })
